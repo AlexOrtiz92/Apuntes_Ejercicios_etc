@@ -63,7 +63,7 @@ Creacion de repositorios tanto en local como en remoto.
     2. `$ git rebase develop` para rebasar la rama develop en master.
     via--> [git-scm.com](https://git-scm.com/docs/git-rebase)
 
-- **PULL-REQUEST**: es la m,anera de trabajar mejor, en vez de hacer merge y rebases. Es una manera controlada y se hace a traves de GitHub.
+- **PULL-REQUEST**: es la manera de trabajar mejor, en vez de hacer merge y rebases. Es una manera controlada y se hace a traves de GitHub.
 
 ---
 1. Indicamos Carpeta donde vamos a crear el reopsitorio con `cd`
@@ -79,7 +79,7 @@ Creacion de repositorios tanto en local como en remoto.
 
 La mejor manera de trabajar es con Git Flows. Aqui indico uno de los mas famosos, el modelo de Vincet Driessen via --> [enlace](https://nvie.com/posts/a-successful-git-branching-model/)
    
-![Vincet Driessen gitflowVincet Driessen](Vincent_Driessen-GitFlow.png "Vincet Driessen gitflowVincet Driessen")
+![Vincet Driessen gitflowVincet Driessen](imagenes_md/Vincent_Driessen-GitFlow_md.png "Vincet Driessen gitflowVincet Driessen")
 
 
 
