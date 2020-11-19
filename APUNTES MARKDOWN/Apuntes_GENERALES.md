@@ -123,3 +123,13 @@ Tambien algo muy importante es que cada Block hace referencia a un "previous-has
   Importancia del metodo constructor.
 
 - <https://repl.it> : una pagina para instalar librerias y mas cosas. Crea entorno de desarrollo.
+
+# Conceptos
+
+- Poner en produccion una app significa ponerla ya en servicio de quien quiera
+
+  - Se hace con el npm run start y con npm run build
+
+  ![imagen_npm](imagenes_md/subir_app_npm.png)
+
+- No usar nunca servidor en tu casa, permite ver la red de tu casa.

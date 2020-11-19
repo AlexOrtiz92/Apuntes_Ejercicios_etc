@@ -44,6 +44,8 @@ Hay dos tipos en Javascript: primitivos y objetos
 
 - `var`: PROHIBIDO
 
+- la variable se declara con sel simbolo `=` que significa **ASIGNACION** no igualdad.
+
 - esto es un objeto con propiedad: propiedad:valor
 
       const o = {x : 1}
@@ -56,7 +58,7 @@ Hay dos tipos en Javascript: primitivos y objetos
 
 Pueden ser numeros eneteros, decimales negativos o como queramos. Cuantos mas decimales mas le costará gestionarlo.
 
-Asignr variables:
+Asignar variables:
 
     let x = 87
 
@@ -89,7 +91,12 @@ Asignr variables:
       console.log("hola \\")
       hola \
 
-- Template string `$ {}`
+  Aqui dejo mas usos:
+  ![backslash](../imagenes_md/backslash.jpg)
+
+- Template string `$ {}` y se encierra entre ``.
+
+  Todo lo que se escriba entre cada ${} aqui ${}, se vera representado en la consola. En este ejemplo al haber espacios, saldra separado por espacios.
 
       const name = "Alejandro";
       const firstQuote = "Mi nombre es";
@@ -103,26 +110,30 @@ Asignr variables:
 
 - INVESTIGAR sobre `RegEx`!!!
 
--
-
 ### **Tipo BOOLEAN**
 
-Solo existen dos tipos literales.
+- Solo existen dos tipos literales.
 
-- `True`
-- `False`
+  - `True`
+  - `False`
 
-- NOTA: cualquier valor en JavaScript puede ser convertido en valor Booleano.
+NOTA: cualquier valor en JavaScript puede ser convertido en valor Booleano.
 
 - 6 valores que funcionan como `False` de por si:
 
-  False
-  undefined
-  ("") string vacio
-  null
-  NaN
-  0
+  `False`
 
+  `undefined`
+
+  `("") string vacio`
+
+  `null`
+
+  `NaN`
+
+  `0`
+
+- Si queremos saber que valor booleano es algo, escribiremos delante de el `!!`
 - Hay 3 operadores booleanos importantes:
 
   - `&&` --> and
@@ -148,7 +159,41 @@ Solo existen dos tipos literales.
 - Usaremos `==` para comparar los `null`y los `undefined`
   Para el resto de comparaciones usaremos `===`
 
-### **Tipo Lista o ARRAY**
+### **Tipo Lista o ARRAY [ ]**
+
+- En las listas Array el primer elemento del mismo siempre es el `0`
+
+- No se pueden sumar ni restar ni multiplicar. Para hacerlo hay que llamar a los elementos que se encuentran dentro de esta de manera especifica.
+
+- No estan ordenados
+
+- la propiedad `.length` nos indica el numero de elementos que tiene.
+
+- el ultimo elemento de una lista es el elemento `lista[lista.length-1]`
+
+- Hay operaciones ya programadas para los array que se llaman `Metodos`
+
+```
+<script>
+
+var nombre = "frabcesc";
+var macedonia = ["poma","pera","33",nombre,true, ,"barcelona"];
+
+//primer elemento
+console.log(macedonia[0]);          //devuelve poma
+
+//segundo elemento
+console.log(macedonia[1]);          //devuelve pera
+
+//ultimo elemento
+console.log(macedonia[6]);         //devuelve barcelona
+console.log(macedonia.length);     //devuelve el valor 7
+
+console.log(macedonia[macedonia.length-1]) //devuelve barcelona
+
+</script>
+
+```
 
 ---
 
@@ -161,7 +206,8 @@ Solo existen dos tipos literales.
 ### **Symbol**
 
 - Pueden ser propiedades de objetos
-- ***
+
+---
 
 ## TIPS
 

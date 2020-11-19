@@ -37,3 +37,7 @@ Ver mas [INFO](https://www.hostinger.es/tutoriales/que-es-npm/#Iniciando-un-proy
 14. En el archivo index.html usaremos las CLASES para indicar y hacer referencia a los formatos predefinidos de Bootstrap. Podremos mirarlos en la documentacion oficial en su [Link a Bootstrap](https://getbootstrap.com/docs/4.5/getting-started/introduction/)
 15. Tambien podremos crear nuestros propios estilo usando el formato de archivo `.scss`que es como una especie de CSS. usaremos la propiedad `@extend` para hacer referencia a clases predefinidas de Bootstrap incluyendolas en clases creadas por nosotros mismos.
 16. es posible darle las propiedades que queramos tambien y crear tantas clases como se desee.
+
+## Bootstrap
+
+- Las columnas de la rejilla definen su anchura especificando cuántas de las 12 columnas de la fila ocupan. Si por ejemplo quieres dividir una fila en tres columnas iguales, utilizarías la clase .col-xs-4 (el 4 indica que cada columna ocupa 4 de las 12 columnas en las que se divide cada fila).
