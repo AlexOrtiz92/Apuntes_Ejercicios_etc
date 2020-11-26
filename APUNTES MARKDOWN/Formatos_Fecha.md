@@ -1,3 +1,4 @@
+```js
 <! - Fecha simple estándar ->
 <time datetime = "2016-01-20"> 20 de enero de 2016 </time>
 <! - Solo año y mes ->
@@ -14,3 +15,4 @@
 <time datetime = "2016-01-20T19: 30 + 01: 00"> 7.30pm, 20 de enero de 2016 son las 8.30pm en Francia </time>
 <! - Llamando a un número de semana específico ->
 <time datetime = "2016-W04"> La cuarta semana de 2016 </time>
+```

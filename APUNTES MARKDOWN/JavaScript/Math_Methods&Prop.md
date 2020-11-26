@@ -161,6 +161,7 @@ Tenga en cuenta que muchas de las funciones matemáticas tienen una precisión q
 - `Math.floor(x)`
 
   Devuelve el mayor entero menor que o igual a un número.
+  Redondea havcia abajo.
 
 - `Math.fround(x)`
 
