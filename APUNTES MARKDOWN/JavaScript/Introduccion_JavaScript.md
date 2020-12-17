@@ -12,7 +12,7 @@
 
 - Hay palabras reservadas en Javascript:
 
-  - `await break case catch class const continue debugger default delete do else export extends finally for function if import in instance of new return super switch this throw try type of var void while with yield`
+  - `await break case catch class const continue debugger default delete do else export extends finally for function if import in instance of new return super switch this throw try typeof let void while with yield`
   - y unas nuevas para futuro: `enum implements interface package private protected public`
 
 - usaremos el semicolom `;` para que quede bonito
@@ -37,12 +37,16 @@ Hay dos tipos en Javascript: primitivos y objetos
 
 ## **Tipos de Variables**
 
+---
+
 - `const` : no se puede variar (constantes) no muta. Una buena practia es declararlas con MAYUS para diferenciar.
 - `let` : puede variarse (Usaremos esta para el curso)
 
   - Es una variable de bloque. Es decir, que puede ser llamada solo en el lugar donde estan declaradas. Va por niveles. P.ej si declaro dentro de una funcion, solo la puedo llamar dentro de esta, sin embargo si esta declarada fuera de la funcion, podre llamarla en la funcion y fuera de ella.
 
-- `var`: PROHIBIDO
+- `var`: PROHIBIDO. Puedes declarar un avariable con el mismo nombre varias veces y se sobre escribe, cosa que con `let`y `const` no pasa, ya que te daria un error.
+
+  Otra caracteristica es que se declara de manera global. No de manera local, dentro de una funcion o estamento como pasa con let y const.
 
   - Se pueden designar varias variables en un mismo `Let/Const/Var` separando por comas:
 
@@ -208,19 +212,24 @@ NOTA: cualquier valor en JavaScript puede ser convertido en valor Booleano.
     [1, 2, 3],
     [4, 5, 6],
     [7, 8, 9],
+    [[10, 11, 12], 13, 14],
   ];
+
+  arr[3]; // equals [[10,11,12], 13, 14]
+  arr[3][0]; // equals [10,11,12]
+  arr[3][0][1]; // equals 11
   ```
 
 - Se pueden meter elementos undefinde, los llamados elementos dispersos.
 
 ```js
-  const sparseArr = [1, , , ,5];
+  const parseArr = [1, , , ,5];
 
-  sparseArr
+  parseArr
   (5) [1, empty × 3, 5]
 ```
 
-- En las listas Array el primer elemento del mismo siempre es el `0`
+- En las listas Array el primer elemento del mismo siempre es el `0`. Esto se llama _zero-indexed_.
 
 - No se pueden sumar ni restar ni multiplicar. Para hacerlo hay que llamar a los elementos que se encuentran dentro de esta de manera especifica.
 
@@ -232,29 +241,61 @@ NOTA: cualquier valor en JavaScript puede ser convertido en valor Booleano.
 
 - Hay operaciones ya programadas para los array que se llaman `Metodos`
 
-  ````js
-    <script>
-
-    var nombre = "frabcesc";
-    var macedonia = ["poma", "pera", "33", nombre, true, , "barcelona"];
-
-    //primer elemento
-    console.log(macedonia[0]); //devuelve poma
-
-    //segundo elemento
-    console.log(macedonia[1]); //devuelve pera
-
-    //ultimo elemento
-    console.log(macedonia[6]); //devuelve barcelona
+  ```js
+  <script>
+    let nombre = "frabcesc"; let macedonia = ["poma", "pera", "33", nombre,
+    true, , "barcelona"]; //primer elemento console.log(macedonia[0]);
+    //devuelve poma //segundo elemento console.log(macedonia[1]); //devuelve
+    pera //ultimo elemento console.log(macedonia[6]); //devuelve barcelona
     console.log(macedonia.length); //devuelve el valor 7
-
     console.log(macedonia[macedonia.length - 1]); //devuelve barcelona
-
-    </script>
+  </script>
   ```
-  ````
+
+- Uno de los metodos para trabajar con los array es `.push()`. Pushea uno o varios elementos dentro de un array, siempre posicionandolo a la derecha:
+
+  ```js
+  let myArray = [
+    ["John", 23],
+    ["cat", 2],
+  ];
+
+  myArray.push(["dog", 3]);
+
+  //Ahora es
+  let myArray = [
+    ["John", 23],
+    ["cat", 2],
+    ["dog", 3],
+  ];
+  ```
+
+- Lo contrario de .push es el metodo `.unshift()`. Pushea un elemento en el primer lugar de un array.
+
+- Otro metodo es `.pop()`. Elimina el ultimo elemento de un array. Puedes meterlo en una nueva variable
+
+  ```js
+  let threeArr = [1, 4, 6];
+  let oneDown = threeArr.pop();
+  console.log(oneDown); // Returns 6
+  console.log(threeArr); // Returns [1, 4]
+  ```
+
+- Otro metodo es `.shift()`. Elimina el primer elemento de un array. Puedes meterlo en una nueva variable
 
 ## **OBJETOS**
+
+---
+
+Son similares a los arrays, pero en vez de tener indices tienen propiedades.
+
+Es una coleccion no ordenada de propiedades.
+
+- Las propiedades de un objetos son 3.
+
+  - Escribible
+  - Numerable
+  - Configurable
 
 - Los objetos sirven para modelar el mundo real.
 
@@ -267,7 +308,7 @@ q.x = 2.3;
 q.y = -1.2;
 ```
 
-- por ejemlo en este caso modelamos un rectangulo
+- por ejemplo en este caso modelamos un rectangulo
 
 ```js
 const rectangle = {
@@ -275,6 +316,386 @@ const rectangle = {
   lowerRight: { x: 4, y: 4 },
 };
 ```
+
+- O por ejemplo el objeto "cat":
+
+```js
+let cat = {
+  name: "Whiskers",
+  legs: 4,
+  tails: 1,
+  enemies: ["Water", "Dogs"],
+};
+```
+
+- Se puede saber los valores de los objetos con notaciones de `.`(puntos) y `[]`(corchetes):
+
+  Los corchetes, evaluan un `string` o algo que pueda ser convertido a string.
+
+  ```js
+  let myDog = {
+  name: "Guachi",
+  legs: 4,
+  tails: 1,
+  friends: ["Alex", "Mario"]
+  };
+  //En consola:
+  myDog
+  {name: "Guachi", legs: 4, tails: 1, friends: Array(2)}
+
+  myDog.name
+  "Guachi"
+  myDog.friends[0]
+  "Alex"
+  myDog.friends[1]
+  "Mario"
+
+  //mas ejemplos de corchetes []
+  let myObj = {
+    "Space Name": "Kirk",
+    "More Space": "Spock",
+    NoSpace: "USS Enterprise"
+  };
+  myObj["Space Name"]; // Kirk
+  myObj['More Space']; // Spock
+  myObj["NoSpace"];    // USS Enterprise
+  ```
+
+- Hay mas maneras de saber los valores de Object y tambien las propiedades con:
+
+  - `Object.keys(x)`
+
+    ```js
+    const o = { x: 1, y: 2 };
+
+    Object.values(o)(2)[(1, 2)];
+    ```
+
+  - `Object.values(x)`
+
+    ```js
+    const o = { x: 1, y: 2 };
+
+    Object.keys(o)(2)[("x", "y")];
+    ```
+
+- Se puede cambiar el valor de cualquier propiedad del objeto en culquier momento, usando los simbolos de asignacion `=` y llamando a las propiedades igual que lo hacemos para ver su valor.
+
+- Tambien podemos **añadir**/**modificar** mas propiedades cuando queramos, de la misma manera que llamamos a las propiedades y asignamos un valor:
+
+  ```js
+  let myDog = {
+  name: "Guachi",
+  legs: 4,
+  tails: 1,
+  friends: ["Alex", "Mario"]
+  };
+
+  //en consola:
+  myDog.age = 14
+  //o
+  myDog["age"] = 14
+  14
+
+  myDog
+  {name: "Guachi", legs: 4, tails: 1, friends: Array(2), age: 14}
+
+  myDog.tails = 5
+
+   myDog
+  {name: "Guachi", legs: 4, tails: 5, friends: Array(2), age: 14}
+
+  ```
+
+- Se pueden eliminar propiedades con la siguiente expresion --> `delete objeto.propiedad` o `delete objeto["propiedad"]`. NUNCA USAR. Mejor convertir a `null`.
+
+- Algunos metodos de `Objetos`:
+
+  - `objeto.hasOwnProperty(propname)`: Para saber si una propiedad esta contenida dentro de ese objeto.
+
+- Hay veces al llamar a objetos que podria petar, ya que buscamos una propiedad en otra que ya ha llegado al null o undefined. Al estar estas vacias nos devolvera un error. Tenemos que aprender a evitar esto, ya sea con condicionales, con cortocircuitos etc.:
+
+  ```js
+  const book = {
+    "sub title": "foo",
+  };
+
+  book.subtitle.length; //esto devuelve error.
+
+  //varias maneras de parar esto y nos devuelva undefined:
+
+  if (book != null) {
+    if (book.subtitle != null) {
+      console.log(book.subtitle.length);
+    }
+  }
+  //ó podremos usar cortocircuito:
+  const length = boook && book.subtitle && book.subtitle.lenght;
+
+  //o en ES6 se añadio otra manera--> chain operator:
+  const es2020Length = book?.subtitle?.length;
+  ```
+
+## **Prototypes**
+
+---
+
+[Herencia y la cadena de prototipos](https://developer.mozilla.org/es/docs/Web/JavaScript/Herencia_y_la_cadena_de_protipos)
+
+[Introducción a JavaScript orientado a objetos](https://developer.mozilla.org/es/docs/Web/JavaScript/Introducción_a_JavaScript_orientado_a_objetos)
+
+- Los `prototype` son los objetos de donde heredan las propiedades otros objetos.
+
+  Todos los objetos tienen un prototipo, pero solo un numero limitado de objetos, tienen la propiedad prototype. Son estos objetos los que tienen la propiedad prototype, los que definen las propiedades de los objetos. Es decir, los que no tienen prototype, lo heredan de estos que sí.
+
+  - `Object.prototype` es el unico objeto que no hereda nada de nadie. Es el objeto primigenio desde el que todos los objetos heredan propiedades.
+
+  - `Function.prototype`
+  - `Array.prototype`
+  - `Date.protptype`
+
+- El operador `new`: crea e inicializa un nuevo objeto. (Es lo mismo que inicializarlo de manera normal !!):
+
+  ```js
+  const o = new Object();
+  //{}
+  //Del cual heredan los metodos los Objetos
+
+  const d = new Date();
+  //Tue Dec 15 2020 20:50:35 GMT+0100 (hora estándar de Europa central)
+  //Del cual heredan los metodos las fechas
+
+  const a = new Array();
+  //[]
+  //Del cual heredan los metodos los Arrays
+
+  const m = new Map();
+  //Map(0) {}
+  ```
+
+  En este caso los inicializa con las caracteristicas de esos objetos(Objet, Date, Map, Array etc)
+
+- Luego esta la manera de crear un objeto solo dandole un prototipo `Object.create()`:
+
+  ```js
+  const o1 = Object.create({ x: 1, y: 2 });
+  ```
+
+  OJO: si hacemos referencia a otra constante, coge el prototipo y hereda las propiedades.HEREDA OJO, que no contiene. Ese objeto estara vacio, pero si preguntamos por una de sus propiedades de las que hereda, te dara el valor.
+
+  ```js
+  let animal = { reino: "no humano" };
+  undefined;
+  let perro = Object.create(animal);
+  undefined;
+  perro;
+  //{};
+  animal;
+  //{reino: "no humano"}
+  //pero si llamamos a una propiedad...
+  perro.reino;
+  //"no humano"
+  ```
+
+  ```js
+  let cosa = Object.create({ x: 1, y: 2 });
+  //undefined
+  cosa;
+  //{}
+  ```
+
+  Un ejemplo claro de como funciona `Object.create` seria el siguiente:
+
+  ```js
+  let a = { a: 1 };
+  // a ---> Object.prototype ---> null
+
+  let b = Object.create(a);
+  // b ---> a ---> Object.prototype ---> null
+  console.log(b.a); // 1 (heredado)
+
+  let c = Object.create(b);
+  // c ---> b ---> a ---> Object.prototype ---> null
+
+  let d = Object.create(null);
+  // d ---> null
+  console.log(d.hasOwnProperty);
+  // undefined, por que d no hereda de Object.prototype
+  ```
+
+  ¿Que pasaria si queremos crear un objeto vacio? No podemos pasarle el `Object.create(null)`ya que crea algo plano sin propiedades. Tendriamos que hacerlo asi:
+
+  ```js
+  const x = Object.create(Object.prototype);
+  //ó
+
+  const y = Object.create({});
+  ```
+
+- Metodos `JSON.stringify` y `JSON.parse` (serializar): es para convertir un objeto en string y convertir un string a objeto respectivamente.
+
+  OJO: puede ser muy util para comparar objetos y ver si son iguales(ya que de normal no se pueden comparar)
+
+- Podemos meter funciones dentro de objetos(INVESTIGAR).
+
+```js
+const square = {
+  side: 10,
+  area() {
+    return this.side * this.side;
+  },
+};
+```
+
+- El metodo `this.` es un metodo para llamar una propiedad de un objeto dentro de ese mismo objeto.
+
+  Hace referencia a la propiedad del objeto en el que se encuentra.
+
+  Se refiere al `Objeto` en el que se encuentra.**IMP!**
+
+  _JavaScript tiene una palabra clave especial, `this`, que puedes usar dentro de un método para referirte al objeto actual. Por ejemplo, supongamos que tienes 2 objetos,Manager e Intern. Cada objeto tiene su propio name,age y job. En la función sayHi(), observa que hay this.name. Cuando se agregan a los 2 objetos, se pueden llamar y devuelve el 'Hola, mi nombre es' y luego agrega el valor name de ese objeto específico. Como se muestra abajo._
+
+  ```js
+  const Manager = {
+    name: "John",
+    age: 27,
+    job: "Software Engineer",
+  };
+
+  const Intern = {
+    name: "Ben",
+    age: 21,
+    job: "Software Engineer Intern",
+  };
+
+  function sayHi() {
+    console.log("Hola, mi nombre es ", this.name);
+  }
+
+  // agrega la función sayHi a ambos objetos
+  Manager.sayHi = sayHi; //Se hacer referencia a la funcion SIN los Parentesis!
+  Intern.sayHi = sayHi;
+
+  Manager.sayHi(); // Hola, mi nombre es John'
+  Intern.sayHi(); // Hola, mi nombre es Ben
+  ```
+
+- `Metodo`: Es una funcion asociada a un objeto. Tambien puede decirse que es una propiedad de un objeto, que es una funcion.
+
+- Hay `2` maneras de añadir funciones a objetos:
+
+  ```js
+  let myObj = {
+    myMethod: function(params) {
+      // ...hacer algo
+    }
+    // ó
+    myOtherMethod(params) {
+      // ...hacer algo más
+    }
+  };
+  ```
+
+- Captadores (`getters`) y establecedores (`setters`)
+
+  - Un captador (`get`) es un método que **obtiene** el valor de una propiedad específica.
+
+    El metodo captador NO espera ningun parametro.
+
+  - Un establecedor (`set`) es un método que **establece** el valor de una propiedad específica.
+
+    El metodo establecedor SI lleva un parametro.
+
+  Ejemplo de uso:
+
+  ```js
+  var o = {
+    a: 7,
+    get b() {
+      return this.a + 1;
+    },
+    set c(x) {
+      this.a = x / 2;
+    },
+  };
+
+  console.log(o.a); // 7
+  console.log(o.b); // 8 <-- En este punto se inicia el método get b().
+  o.c = 50; // <-- En este punto se inicia el método set c(x)
+  console.log(o.a); // 25
+  ```
+
+### **CLASES** (INVESTIGAR)
+
+En Javascript no existen las clases. Son azucar sintactico.(INVESTIGAR minuto19:15)
+
+```js
+class ShoppingCart {
+};
+const shoppingCart = new ShoppingCart() {
+};
+
+```
+
+- Funcion Constructora:(INVESTIGAR)
+
+  - Suele empezar en letra Mayuscula por convencion.
+
+```js
+function Car(make, model, year) {
+  this.make = make;
+  this.model = model;
+  this.year = year;
+}
+
+let mycar = new Car("Eagle", "Talon TSi", 1993);
+```
+
+- ¿Que es instanciar(crear una instancia)?(INVESTIGAR)
+
+## **Herencia**
+
+---
+
+- En Javascript no existen las clases. Si existe la palabra `class` pero solo sirve como azucar sintactico, para endulzar a los desarrolladores que venian de otros lenguajes.
+
+  Lo que podemos referir como herencia en Javascript es a la cadena de prototipos. Cada objeto tiene una propiedad privada (llamada `Prototype`) que mantiene un enlace a otro objeto llamado `Prototipo`. Ese objeto tiene su prototipo y asi sucesivamente hasta llegar a uno cuyo objet oprototipo es `null`. Ahi acaba la cadena.
+
+  [Herencia y la cadena de prototipos](https://developer.mozilla.org/es/docs/Web/JavaScript/Herencia_y_la_cadena_de_protipos)
+
+  Se puede acceder a la propiedad de un objeto del cual heredas.
+
+- Un ejemplo muy claro de como funcionan las cadenas de prototipos y por que hay veces que nos devuelve indefined. Es cuando llega al tope y no encuentra el valor, solo null, entonces devuelve undefined:
+
+  ```js
+  // Supongamos que tenemos un objeto o, con propiedades a y b:
+  // {a: 1, b: 2}
+  // o.[[Prototype]] tiene propiedades b y c:
+  // {b: 3, c: 4}
+  // Finalmente, o.[[Prototype]].[[Prototype]] es null.
+  // Este es el final de la cadena de prototipos, ya que null,
+  // por definición, no tiene [[Prototype]].
+  // Por tanto, la cadena completa de prototipos se vería como:
+  // {a:1, b:2} ---> {b:3, c:4} ---> null
+
+  console.log(o.a); // 1
+  // ¿Hay una propiedad 'a' en o? Sí, y su valor es 1.
+
+  console.log(o.b); // 2
+  // ¿Hay una propiedad 'b' en o? Sí, y su valor es 2.
+  // El prototipo también tiene una propiedad 'b', pero no se ha visitado.
+  // Esto se llama "solapamiento de propiedades"
+
+  console.log(o.c); // 4
+  // ¿Hay una propiedad 'c' en o? No, comprobamos su prototipo.
+  // ¿Hay una propiedad 'c' en o.[[Prototype]]? Sí, y su valor es 4.
+
+  console.log(o.d); // undefined
+  // ¿Hay una propiedad 'd' en o? No, comprobamos su prototipo.
+  //  ¿Hay una propiedad 'd' en o.[[Prototype]]? No, comprobamos su prototipo.
+  // o.[[Prototype]].[[Prototype]] es null, paramos de buscar.
+  // No se encontró la propiedad, se devuelve undefined
+  ```
 
 ## **FUNCIONES**
 
@@ -314,6 +735,25 @@ const suma5 = function (x) {
 
 suma5(7); //--> 12
 ```
+
+- Tres maneras de escribir la misma funcion:
+
+  ```js
+  //1
+  const sum = function (x, y) {
+    return x + y;
+  };
+  //2
+  function sum(x, y) {
+    return x + y;
+  }
+  //3
+  const sum = (x, y) => x + y;
+  ```
+
+- Las variables creadas dentro de una funcion tendran un _scope_ Local en vez de Global.
+
+  Si declaramos un avariable con un mismo nombre que una fuera de la funcion, dentro d ela funcion, tomara el valor de dentro de la funcion.
 
 ## **Expresiones**
 
@@ -732,7 +1172,7 @@ a === b ? "una cosa" : a < b ? "otra" : "finalmente";
     true;
     ```
 
-  - Operador "primero definido" `??` (INVESTIGAR):
+  - Operador "primero definido" `??`:
 
     Coge el primer valor de tu condicion. Si no usamos esto, en caso de ser `0` o `null` te lo saltaria o te daria algo erroneo, porque se consideran false. `0 y null son false`.
 
@@ -894,6 +1334,10 @@ a === b ? "una cosa" : a < b ? "otra" : "finalmente";
 ---
 
 ## TIPS
+
+- Pagina para practicar ejercicios MUCHOS:
+
+  [https://www.freecodecamp.org/learn/](https://www.freecodecamp.org/learn/)
 
 - **Programacion orientada a objetos:** en vez de definir funciones que operan sobre los distintos tipos, definimos tipos en si mismo que contienen funciones para trabajar con esos valores
 

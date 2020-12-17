@@ -72,7 +72,9 @@ Creacion de repositorios tanto en local como en remoto.
 
 - ALIAS de lola, para ver interfaz de commits: `git config --global alias.lola "log --graph --decorate --pretty=oneline --abbrev-commit --all"`
 
--
+- De est amanera configuraremos el `git lola`:
+
+  `git config --global alias.lola "log --graph --decorate --pretty=oneline --abbrev-commit --all" `
 
 ---
 

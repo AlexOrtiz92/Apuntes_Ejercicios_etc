@@ -4,7 +4,7 @@
 
 ```js
 function randomInt(min, max) {
-  return min + Math.floor(Math.random() * (max - min + 1));
+  return min + Math.floor(Math.random() * (max - min + 1)); //es +1 porque sino nunca llegaria al maximo, al redondear hacia abajo y al no llegar nunca Math.random a 1.
 }
 console.log(randomInt(1, 10));
 ```
@@ -16,7 +16,7 @@ const isNil = (x) => (x === null ? true : x === undefined ? true : false);
 //si x es estok dame esto, si x es otra cosa dame esto y si es todo lo demas dame false
 ```
 
-- Para saber si un valor es distinto de `null`o `undefined`
+- Para saber si un valor es distinto de `null` o `undefined`
 
 ```js
 const isNil = (x) => x != null;
@@ -37,4 +37,28 @@ function layout(size) {
   return size >= 960 ? "LARGE" : size >= 660 ? "MEDIUM" : "SMALL";
 }
 console.log(layout(window.innerWidth));
+```
+
+- Calcular el factorial de un numero (Es Recursiva):
+
+```js
+function factorial(num) {
+  if (num === 0) {
+    return 1;
+  } else {
+    return num * factorial(num - 1);
+  }
+}
+```
+
+- Devuelve un numero aleatorio entre 5 y 10 incluidos:
+
+```js
+function random() {
+  let result = 0;
+  while (result < 5 || result > 10) {
+    result = Math.floor(Math.random() * 100);
+  }
+  return result;
+}
 ```

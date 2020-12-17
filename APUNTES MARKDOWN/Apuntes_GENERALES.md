@@ -38,7 +38,7 @@ Por otro lado el `lenguaje interpretado` es convertido a maquina a medida que es
 
 Son dos paradigmas de programacion.
 
-- Programacion Orientada a Objetos: el programa usa objetos para representar lo que estas programando (muchas veces objetos del mundo real)
+- **Programacion Orientada a Objetos**: el programa usa objetos para representar lo que estas programando (muchas veces objetos del mundo real)
 
   Los objetos guardan información interna de ellos en `atributos`. Los atributos son manipulados mediante `métodos` o `funciones` que son programados en los mismos objetos.
 
@@ -53,13 +53,15 @@ Son dos paradigmas de programacion.
     - Objective-C
     - Swift
 
-- Programacion Funcional: es la forma de programar que intenta evitar cambios de estados y datos cambiantes. En la programación orientada a funciones, la salida de una función siempre debería ser la misma ante entradas similares. Es un paradigma de programacion declarativa.
+- **Programacion Funcional**: es la forma de programar que intenta evitar cambios de estados y datos cambiantes. En la programación orientada a funciones, la salida de una función siempre debería ser la misma ante entradas similares. Es un paradigma de programacion declarativa.
 
   - Algunos de ellos son:
     - Haskell
     - Miranda
     - Scala
     - Lisp
+
+- **Programacion Procedural**:
 
 ## **¿Que es una API?**
 
@@ -132,4 +134,52 @@ Tambien algo muy importante es que cada Block hace referencia a un "previous-has
 
   ![imagen_npm](imagenes_md/subir_app_npm.png)
 
+- ¿Que es y para qué sirve un archivo `*.json`?: [Link](https://www.json.org/json-en.html)
+
+  - Las siglas significan `JavaScript Object Notation` (notacion de objetos JavaScript).
+
+  - Es un formato ligero de intercambio de datos, sencillo de leer y escribir para los programadores y simple de interpretar y generar para las máquinas.
+
+  - Dicen que es una alternativa a XML.
+
+  - Es un formato de texto totalmente independiente de cualquier lenguaje, pero utiliza convenciones de ellos.
+
+  - Define seis tipos de valores: null, number, string, boolean, array y objects”.
+
 - No usar nunca servidor en tu casa, permite ver la red de tu casa.
+
+## **5 Principios de la programacion (SOLID)**
+
+- El tamaño de una funcion no puede se rmayor de unas 20 Lineas
+
+- Las funciones solo deben hacer una unica cosa, no deben utilizarse para mas. Tener en cuenta el SRP (**Single Responsibility Principle**)
+
+1. **Single Responsibility Principle (SRP)**
+
+   - Las funciones solo deben hacer una unica cosa, no deben utilizarse para mas.
+
+2. **Open/Closed Principle**
+
+3. **Liskov Substitution Principle**
+
+4. **Interface Segregation Principle**
+
+5. **Dependency Inversion Principle**
+
+## Recursividad
+
+- Son funciones que se llaman a si mismas para ser utilizadas. Por ejemplo esto puede pasar al realizar ejercicios como:
+
+  - Calcular el Fibonacci de un numero
+
+  - Saber el factorial de un numero
+
+    ```js
+    function factorial(n) {
+      if (n === 0) {
+        return 1;
+      } else {
+        return n * factorial(n - 1);
+      }
+    }
+    ```
