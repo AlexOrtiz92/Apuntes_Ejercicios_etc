@@ -79,13 +79,33 @@ El significado de API es `Application Programming Interfaces` (interfaz de progr
 
 ## **¿Que es npm?**
 
+<https://www.npmjs.com/>
+
+Es un gestor de librerias.
+
 Dentro de Node, el código se organiza por módulos o paquetes, así que al momento de trabajar con él va a ser necesario agregar más módulos, es aquí donde entra npm.
 
 Node Package Manager o simplemente `npm` es un gestor de paquetes, el cual hará más fáciles nuestras vidas al momento de trabajar con Node, ya que gracias a él podremos tener cualquier librería disponible con solo una línea de código, npm nos ayudará a administrar nuestros módulos, distribuir paquetes y agregar dependencias de una manera sencilla.
 
+Cualquiera puede subir sus librerias y es muy sencilla de utilizar.
+
+las librerias se instalan asi:
+
+- `npm install libreria`
+
+Se instala de manera local, en tu proyecto, en la carpeta que este tu proyecto.
+
+En caso de querer instalar de manera global seria asi(con -g):
+
+- `npm install -g libreria`
+
+Antiguamente habia que instalar incluso el modulo http y fs. Ahora se ha introducido de manera nativa en Node.
+
+Cada modulo (libreria) de npm esta compuesto por unas dependencias, que a su vez usan dependencias de otras librerias mas generales. Ese es el po que de tantas carpetas en `node_modules`
+
 ---
 
-## **Que es Node.js?**
+## **Qué es Node.js?**
 
 Es un motor/entorno de ejecucion de JavaScript. Traduce lo que escribimos para que el ordenador entienda lo que tiene que hacer.
 

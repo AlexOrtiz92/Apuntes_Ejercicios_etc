@@ -426,3 +426,270 @@ Hay mucha smaneras de hacer loops.
 
   console.log(propObject(perro));
   ```
+
+# **SINCRONIA**
+
+La concurrencia y el Paralelismo estan relacionados pero tienen matices. Si se ejecutan y terminan primero una y despues otra, se llama Secuencial **(Modelo 1)**.
+
+Modelos de Sincronia:
+![Modelos de Sincronia](../imagenes_md/Modelos_de_Sincronia.png)
+
+## Concurrencia
+
+Es cuando dos o mas tareas progresan de manera simultanea. No en el mismo espacio de tiempo. Vas avanzando en cada una poquito a poco.
+
+Seria el **modelo 3**
+
+## Paralelismo
+
+Cuando dos o mas tareas se ejecutan literalmente a la vez, en el mismo espacio de tiempo.
+
+Seria el **modelo 4**
+
+## Tareas (Task)
+
+Hay tareas sincronas (o bloqueantes) o asincronas.
+
+JavaScript utiliza un modelo `Asincrono y NO Bloqueante` o tambien llamado `Event loop`. Un loop de eventos en un unico hilo.
+
+![Modelo Javascriopt](../imagenes_md/Modelo_Javascript.png)
+
+```js
+setTimeout(() => console.log("he terminado"), 2000);
+//ejecutara el call Back despues de 2000 ms
+
+//Si ocurriera esto
+let callBack = () => console.log("Esto deberia ir primero");
+
+setTimeout(callBack, 0);
+
+console.log("Primero!");
+
+//incluso aunque sean 0 ms, iria despues que el otro proceso, ya que se pone a la cola despues del delay.
+```
+
+Mientras lanzamos el setTimeout, JS va realizando una serie de tareas. es de ir, empieza ejecutando ese codigo setTimeout, una vez acaba ese contador, pondra a la cola de evento el codigo que deseamos ejecutar.
+
+`setTimeout()` es una funcion asincrona. Ejecutara el siguiente proceso antes que su propio call back.
+
+Antes se trabajaba usando estos CALLBACK y los setTimeout, pero se hacia ingobernable poner uno detras de otro, ocurriendo el adouken, la piramide etc.
+
+## **Promesas**
+
+---
+
+[Uso de promesas](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises)
+
+Esto se corrigio con las `Promesas` IMPORTANTE (en Python se llaman futuros)
+
+- Las `Promesas` usan una funcion como argumento con dos parametros (resolve, reject):
+
+```js
+const myPromise = new Promise((resolve, reject) => {});
+```
+
+- Las promesas tienen 3 estados: `pending`, `fullfilled` y `reject`
+
+- Debajo de ellas hay un callBack y son prioritarias al setTimeout.
+
+- Para crear una promesa tenemos que llamar al `new Promise()`
+
+```js
+const promise = new Promise((resolve, reject) => {
+  const number = Math.floor(Math.random() * 10);
+
+  setTimeout(() => {
+    return number > 5 ? resolve(number) : reject("menor de 5");
+  }, 1000);
+})
+  .then((result) => console.log(result))
+  .catch((error) => console.log(error));
+```
+
+- el `resolve` y `reject` son funciones.(INVESTIGAR)
+
+  - `reject`: hace saltar al Error.
+
+  - `resolve`:
+
+- Usaremos el `.then()` para mostrar lo que pasa si sale bien/true y el `.catch()` para lo contrario.(INVESTIGAR)
+
+  ![then_catch](../imagenes_md/then_catch.png)
+
+  Ejemplo del funcionamiento de los dos:
+
+  ```js
+  //ejemplo 1
+  let promise = request();
+
+  promise.then(
+    function (data) {
+      console.log(data);
+    },
+    function (error) {
+      console.error(error);
+    }
+  );
+
+  //ejemplo 2
+  let promise = request();
+
+  promise
+    .then(function (data) {
+      console.log(data);
+    })
+    .catch(function (error) {
+      console.error(error);
+    });
+  ```
+
+  - `.then(fullfilled, rejected)`: nos traera el valor o lo que queramos y cuantas veces queramos (encadenando/bindeando tantos then como queramos) cuando el `resolve` se haya resuelto.
+
+    Tambien puede actuar con el `reject` cuando haya tenido fin y se resuelva.
+
+  - `.catch()`: nos traera el valor del reject cuando lo encadenamos despues de un then. Es ejecutado inmediatamente despues de que el metodo `reject` es llamado
+
+    ```js
+
+    //Con el .catch te ahorras parte del then.
+
+    const promise = request();
+
+    promise.catch((error) => {
+      mostrarError(error);
+    })
+
+    //significan lo mismo las dos maneras
+
+    promise.then(null, error) => {
+      mostrarError(error)
+    }
+    ```
+
+- **Cadena de Promesas**:
+
+  Con ella snos aseguramos el orden de ejecucion de las promesas.
+
+  Ejemplo claro:
+
+  ```js
+  function task1() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve("resultado de la task1");
+      }, 5000);
+    });
+  }
+
+  function task2() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve("resultado de la task2");
+      }, 1000);
+    });
+  }
+
+  const promise = task1();
+
+  promise
+    .then((data1) => {
+      console.log("data1", data1);
+      return task2(); //Si el resultado de un then es una promesa como aqui, siempre va a ser la promesa del siguiente then.
+    })
+    .then((data2) => {
+      console.log("data2", data2);
+      return "Hola Promesas";
+    })
+    .then((data3) => {
+      console.log("data3", data3);
+    });
+  ```
+
+  TRAMPAS y cosas a evitar con cadenas de promesas:
+
+  - Queremos devolver el dato de una promesa pero en realidad no se manda:
+
+    CUIDADO: hay veces que nos puede interesar que no nos devuelva el dato, por ejemplo al enviar un dato al servidor, no queremos que nos devuelva nada.
+
+    ```js
+    //esta funcion no devolvera el dato, sino la promesa de nuevo.
+    function testPromise() {
+      const promise = task();
+
+      promise.then(data) => hazLoQueSea((data));
+
+      return promise;
+      }
+
+    //Si queremos devolver el dato debemos hacer lo siguiente:
+
+    function testPromiseWell() {
+      return task().then((data) => hasLoQueSea(data))
+
+    }
+    ```
+
+  - Puede que nos veamos tentados en anidar las tareas dentro de otras, pero para ello no hacemos cadenas, porque el resultado es la piramide del HORROR de nuevo:
+
+    ```js
+    //Esto NO
+    function doom() {
+      return task().then(() => {
+        return task2().then(() => {
+          return task3().then(() => {
+            return task4().then(() => {
+              hazLoQueSea();
+            });
+          });
+        });
+      });
+    }
+
+    //Esto SI
+    function notDoom() {
+      return task()
+        .then(() => {
+          return task2();
+        })
+        .then(() => {
+          return task3();
+        })
+        .then(() => {
+          return task4();
+        })
+        .then(() => {
+          hazLoQueSea();
+        });
+    }
+    ```
+
+  - La promesa fantasma.
+
+    REGLA:Cuando una funcion pueda retornar una promesa, siempre debe retornar esa promesa.
+
+    ```js
+    //Esto no devuelve una promesa, en un caso si en el otro no.
+    function ghostPromise() {
+      if (test) {
+        return unaNuevaPromesa();
+      } else {
+        return "foo";
+      }
+    }
+    const result = ghostPromise();
+    if (
+      typeof ghostPromise === "object" &&
+      typeof ghostPromise.then === "function"
+    ) {
+    } else {
+    }
+
+    //En este caso hemos convertido el segundo caso en una Promesa auto resuelta. Es decir es como si se diera el resultado a si mismo.
+    function notGhosting() {
+      if (test) {
+        return unaNuevaPromesa();
+      } else {
+        return Promise.resolve("foo");
+      }
+    }
+    ```

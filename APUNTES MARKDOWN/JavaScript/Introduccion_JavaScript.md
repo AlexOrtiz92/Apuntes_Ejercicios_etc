@@ -17,6 +17,10 @@
 
 - usaremos el semicolom `;` para que quede bonito
 
+- `console.log()`:Escribe en consola
+- `console.error()`:Lanza un error en consola
+- `console.warn()`:lanza un warning en consola
+
 ## VARIABLES
 
 ---
@@ -43,6 +47,26 @@ Hay dos tipos en Javascript: primitivos y objetos
 - `let` : puede variarse (Usaremos esta para el curso)
 
   - Es una variable de bloque. Es decir, que puede ser llamada solo en el lugar donde estan declaradas. Va por niveles. P.ej si declaro dentro de una funcion, solo la puedo llamar dentro de esta, sin embargo si esta declarada fuera de la funcion, podre llamarla en la funcion y fuera de ella.
+
+  - El declarar una variable `const` no te asegura que esa variable sea mutada en los Array y los Objetos y Funciones.
+
+    Por ejemplo:
+
+    ```js
+    const arr = [2, 4, 7];
+    arr[0] = 7;
+    arr[1] = 5;
+    arr[2] = 2;
+    arr; //[7, 5, 2];
+
+    //ó
+    const obj = { x: 1, y: 2 };
+    obj.x = 8;
+    obj.y = 9;
+    obj; //{x: 8, y: 9}
+    ```
+
+    Para que esa variable sea inmutable usaremos la funcion `Object.freeze()`
 
 - `var`: PROHIBIDO. Puedes declarar un avariable con el mismo nombre varias veces y se sobre escribe, cosa que con `let`y `const` no pasa, ya que te daria un error.
 
@@ -124,9 +148,9 @@ console.log(x);
 
   ![backslash](../imagenes_md/backslash.jpg)
 
-- Template string `$ {}` y se encierra entre ``.
+- **Template string** `$ {}` y se encierra entre ``.
 
-  Todo lo que se escriba entre cada ${} aqui ${}, se vera representado en la consola. En este ejemplo al haber espacios, saldra separado por espacios.
+  Todo lo que se escriba entre cada ${} aqui ${}, formara parte del string. En este ejemplo al haber espacios, saldra separado por espacios.
 
   ```js
   const name = "Alejandro";
@@ -235,9 +259,32 @@ NOTA: cualquier valor en JavaScript puede ser convertido en valor Booleano.
 
 - No estan ordenados
 
-- la propiedad `.length` nos indica el numero de elementos que tiene.
+- La propiedad `.length` nos indica el numero de elementos que tiene.
+
+  Si usaramos lenght para indicar una longitud nueva, eliminara todo quello que sobre pase la longitud de ese array.OJO!
 
 - el ultimo elemento de una lista es el elemento `lista[lista.length-1]`
+
+- Desestructuración de Array:
+
+  ```js
+  //Ejemplo 1
+  const [a, b, ...arr] = [1, 2, 3, 4, 5, 7];
+  console.log(a, b); // 1, 2
+  console.log(arr); // [3, 4, 5, 7]
+
+  //Ejemplo 2
+  const source = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  function removeFirstTwo(list) {
+    const [, , ...arr] = list;
+
+    return arr;
+  }
+  const arr = removeFirstTwo(source);
+  undefined;
+  arr;
+  //(8) [3, 4, 5, 6, 7, 8, 9, 10]
+  ```
 
 - Hay operaciones ya programadas para los array que se llaman `Metodos`
 
@@ -282,6 +329,235 @@ NOTA: cualquier valor en JavaScript puede ser convertido en valor Booleano.
   ```
 
 - Otro metodo es `.shift()`. Elimina el primer elemento de un array. Puedes meterlo en una nueva variable
+
+- Spread operator `[...]`: sirve Para indicar todo el contenido de un array:
+
+  ```js
+  const a = [1, 2, 3];
+  const b = [0, ...a. 4];//[0, 1, 2, 3, 4]
+
+  ```
+
+  Funciona con cualquier objeto iterable (por ejemplo String):
+
+  ```js
+  const digit = [..."123456789"];
+
+  //(9) ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+  ```
+
+  Tambien podemos usar `.apply` para referirnos a todo el contenido de un array:
+
+  ```js
+  let x = [1, 3, 4, 2];
+  //undefined
+  Math.max(x);
+  //NaN
+  Math.max.apply(null, x);
+  //4
+  Math.max(...x);
+  //4
+  ```
+
+- Objetos `set`: es una coleccion que permite almacenar valores unicos (no duplicados) y es iterable. se invoca con `new Set`. Ejemplo:
+
+  [Enlace mas info](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Set)
+
+  ```js
+  const deleteDuplicates = (arr) => {
+    return [...new Set(arr)];
+  };
+
+  deleteDuplicates([1, 1, 2, 3, 4, 4, 4, 5, 5, 5, 6, 6, 6, 7, 7, 8, 8, 9]);
+  //(9) [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  ```
+
+- Constructor de Array con `new Array()`:
+
+  ```js
+  let a = new Array(); //equivale al literal de array vacio []
+  let b = new Array(10); //lo usa como argumento de longitud (crea 10 valores vacios) crea un array de esta longitud
+
+  //ó
+
+  let c = new Array(5, 4, 3, 2, 1, "test"); //aqui son los elementos
+  ```
+
+- `Array.of`: Retorna un array con valores que le indiquemos, aunque solo sea 1.
+
+  ```js
+  let a = Array.of(); //[] array vacio
+  let b = Array.of(10); //[10]
+  ```
+
+- `Array.from()`: funciones de un array que se aplican funciones por cada elemento. Devuelve un array que contiene los elementos de icho objeto.
+
+  Ejemplo 1:
+
+  ```js
+  let original = [1, 2, 3, 4];
+  //undefined
+  let copy = Array.from(original);
+  //undefined
+  copy;
+  //(4)[(1, 2, 3, 4)]
+  ```
+
+  De segundo argumento `Array.from` puede aceptar una funcion, que se ejecutara tantas veces como indices tenga el array.
+
+  Ejemplo 2
+
+  ```js
+  let roll = Array.from(new Array(6), (x) => Math.floor(Math.random() * 6) + 1);
+  //(6) [1, 1, 6, 3, 4, 4]
+  ```
+
+- `.flat()`: (INVESTIGAR)
+- `.sort()` (INVESTIGAR)
+- `.slice(start, end)`: devuelve un array indicando desde donde hasta donde lo quieres. El primer argumento indicas el index desde donde vas a cogerlo, el segundo hasta donde quieres cogerlo(sin incluirlo.
+
+  ```js
+  let nombres = ["Rita", "Pedro", "Miguel", "Ana", "Vanesa"];
+  let masculinos = nombres.slice(1, 3);
+
+  // masculinos contiene ['Pedro','Miguel']
+  ```
+
+  Si los argumentos son negativos, empezara a contar desde el final del array.
+
+  ```js
+  console.log((hola = nombres.slice(-3, -1)));
+  //(2) ["Miguel", "Ana"]
+  ```
+
+- `arr.splice()`: cambia el contenido de un array eliminando elementos existentes o agregando nuevos elementos.
+
+  [Enlace](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Array/splice)
+
+  Argumentos:
+
+  - `start`: el indice desde donde va a comenzar
+  - `deleteCount`: cuantos elementos se vana eliminar contando el start. Si es 0 no se eliminara, sino que insertará el siguiente argumento.
+  - `item`: es el elemento a insertar o por el que se va a sustituir.
+
+  ```js
+  //añadir
+  let myFish = ["angel", "clown", "mandarin", "sturgeon"];
+  let removed = myFish.splice(2, 0, "drum");
+  //["angel", "clown", "drum", "mandarin", "sturgeon"]
+
+  //eliminar
+  let myFish = ["angel", "clown", "drum", "mandarin", "sturgeon"];
+  let removed = myFish.splice(3, 1);
+  // myFish is ["angel", "clown", "drum", "sturgeon"]
+
+  //eliminar e insertar
+  let myFish = ["angel", "clown", "drum", "sturgeon"];
+  let removed = myFish.splice(2, 1, "trumpet");
+
+  // myFish is ["angel", "clown", "trumpet", "sturgeon"]
+  ```
+
+- `.join()` (INVESTIGAR)
+- `arr.includes`: te dice si algo esta incluido en un array o no (devuelve true o false)
+
+## **Metodos de iteracion de un Array** IMPORTANTE
+
+Todos los metodos que vamos a ver, aceptan una funcion como primer argumento y la unvocan una vez por cada elemento o algunos de ellos. La funcion que le pasamos es invocada con 3 argumentos normalmente. valor de array, el index y el array en si mismo. Normalmente necesitamos el primero y el segundo pueden ignorarse(no siempre).
+
+Es como si hicieramos esto:
+
+```js
+const arr = [1, 2, 3, 4, 5];
+
+const aplica = (nuestrafuncion) => {
+  for (let element of array) {
+    nuestraFuncion(element);
+  }
+};
+```
+
+- `arr.foEeach()`: recorre todo el array y aplica la funcion que tu le digas a cada elemento del array (como un for). Recorre y no devuelve nada:
+
+```js
+const arr = [1, 2, 3, 4, 5];
+
+arr.forEach((e) => e * 2);
+```
+
+- `arr.map()`: Recorre y te devuelve un array con los cambios hechos segun la funcion:
+
+```js
+const arr = [1, 2, 3, 4, 5];
+
+arr.map((e) => e + 1);
+//(5) [2, 3, 4, 5, 6]
+```
+
+Con el caso del dado el sabe que tiene que pasar por 4 elementos:
+
+```js
+const rolls = [0, 0, 0, 0].map(() => Math.floor(Math.random() * 6) + 1);
+```
+
+- `arr.filter()`:Realiza filtros y te devuelve aquellos valores que tu quieras segun el filtro.Nos devuelve algo que cumpla una condicion
+
+```js
+const arr = [1, 2, 3, 4, 5];
+
+arr.filter((value) => value < 3);
+//(2) [1, 2]
+```
+
+- `arr.find` : Te devuelve el primero que cumpla una condicion. Solo un valor.
+
+- `arr.some()`: te devuelve un true o false si alguno cumple la condicion que le marcas:
+
+```js
+const arr = [1, 2, 3, 4, 5];
+
+arr.some((a) => a === 5);
+//true
+```
+
+EJEMPLO Emojis:
+
+```js
+const ingredientes = ["🌽", "🐮", "🐔"];
+const cocinar = (ingrediente) => {
+  switch (ingrediente) {
+    case "🌽":
+      return "🍿";
+    case "🐮":
+      return "🍔";
+    case "🐔":
+      return "🍗";
+  }
+};
+const esVegetariano = (ingrediente) => {
+  switch (ingredientes) {
+    case "🌽":
+      return true;
+    case "🐮":
+      return false;
+    case "🐔":
+      return false;
+  }
+};
+const esPollo = (ingrediente) => ingrediente === "🐔";
+ingredientes.map(cocinar); // [ "🍿", "🍔", "🍗" ]
+ingredientes.filter(esVegetariano); // ["🌽"]
+ingredientes.find(esPollo); // "🐔"
+```
+
+- `arr.reduce()`(INVESTIGAR):
+
+  [Explicacion en freecode](https://www.freecodecamp.org/news/reduce-f47a7da511a9/)
+
+```js
+const arr = [1, 2, 3, 4, 5];
+arr.reduce((acc, next) => acc + next, 0);
+```
 
 ## **OBJETOS**
 
@@ -436,6 +712,49 @@ let cat = {
   const es2020Length = book?.subtitle?.length;
   ```
 
+- Desestructuracion de Objetos:
+
+  `Extraer`: Podemos crear variables de cada propiedad de un objeto usando el metodo de desestructuracion de Objetos. Ejemplo:
+
+  ```js
+  const Alex = { nombre: "Alex", apellidos: "Ortiz Ortega" };
+  const { nombre, apellidos } = Alex;
+  nombre;
+  //"Alex"
+  apellidos;
+  //"Ortiz Ortega"
+  ```
+
+  `Asignar`:Tambien se pueden asignar valores o mejor dicho, extraer valores de una propiedad y asignarselos a una nueva propiedad.
+
+  ```js
+  const Alex = { nombre: "Alex", apellidos: "Ortiz Ortega" };
+  const { nombre: name, apellidos: surname } = Alex;
+  name;
+  //"Alex"
+  surname;
+  //"Ortiz Ortega"
+  ```
+
+  Tambien puedes acceder a elementos anidados:
+
+  ```js
+  const LOCAL_FORECAST = {
+    yesterday: { low: 61, high: 75 },
+    today: { low: 64, high: 77 },
+    tomorrow: { low: 68, high: 80 },
+  };
+
+  const {
+    today: { low: lowToday, high: highToday },
+  } = LOCAL_FORECAST;
+
+  lowToday;
+  //64
+  highToday;
+  //77
+  ```
+
 ## **Prototypes**
 
 ---
@@ -538,14 +857,36 @@ let cat = {
 
 - Podemos meter funciones dentro de objetos(INVESTIGAR).
 
-```js
-const square = {
-  side: 10,
-  area() {
-    return this.side * this.side;
-  },
-};
-```
+  ```js
+  const square = {
+    side: 10,
+    area() {
+      return this.side * this.side;
+    },
+  };
+  ```
+
+  - 2 maneras de crear metodos(funciones) dentro de objetos o clases:
+
+    ```js
+    const point = {
+      x: 1,
+      y: 2,
+      toString: function () {
+        return `${this.x} - ${this.y}`;
+      },
+    };
+
+    //ó
+
+    const point = {
+      x: 1,
+      y: 2,
+      toString() {
+        return `${this.x} - ${this.y}`;
+      },
+    };
+    ```
 
 - El metodo `this.` es un metodo para llamar una propiedad de un objeto dentro de ese mismo objeto.
 
@@ -576,11 +917,11 @@ const square = {
   Manager.sayHi = sayHi; //Se hacer referencia a la funcion SIN los Parentesis!
   Intern.sayHi = sayHi;
 
-  Manager.sayHi(); // Hola, mi nombre es John'
+  Manager.sayHi(); // Hola, mi nombre es John
   Intern.sayHi(); // Hola, mi nombre es Ben
   ```
 
-- `Metodo`: Es una funcion asociada a un objeto. Tambien puede decirse que es una propiedad de un objeto, que es una funcion.
+- `Método`: Es una funcion asociada a un objeto. Tambien puede decirse que es una propiedad de un objeto, que es una funcion.
 
 - Hay `2` maneras de añadir funciones a objetos:
 
@@ -606,10 +947,34 @@ const square = {
 
     El metodo establecedor SI lleva un parametro.
 
+  Ejemplo con clases:
+
+  ```js
+  class Thermostat {
+    constructor(temp) {
+      this.temp = (5 / 9) * (temp - 32);
+    }
+
+    get temperature() {
+      return this.temp;
+    }
+
+    set temperature(degrees) {
+      this.temp = degrees;
+    }
+  }
+  // Only change code above this line
+
+  const thermos = new Thermostat(76); // Setting in Fahrenheit scale
+  let temp = thermos.temperature; // 24.44 in Celsius
+  thermos.temperature = 26;
+  temp = thermos.temperature; // 26 in Celsius
+  ```
+
   Ejemplo de uso:
 
   ```js
-  var o = {
+  let o = {
     a: 7,
     get b() {
       return this.a + 1;
@@ -627,7 +992,7 @@ const square = {
 
 ### **CLASES** (INVESTIGAR)
 
-En Javascript no existen las clases. Son azucar sintactico.(INVESTIGAR minuto19:15)
+En Javascript no existen las clases. Son azucar sintactico.
 
 ```js
 class ShoppingCart {
@@ -637,21 +1002,139 @@ const shoppingCart = new ShoppingCart() {
 
 ```
 
-- Funcion Constructora:(INVESTIGAR)
+Las clases se escriben y se escribian de la siguiente manera antes de inventar la palabra `class` que es azucar sintactico:
+
+Esto es lo que hay debajo de un `class`
+
+```js
+//la funcion constructora por un lado
+function Range(from, to) {
+  this.from = from;
+  this.to = to;
+}
+
+//los metodos de esa funcion por otro:
+Range.prototype = {
+  includes: function (x) {
+    return this.from <= x && x <= this.to;
+  },
+
+  toString: function () {
+    return `${this.from}...${this.to}`;
+  },
+};
+```
+
+Ahora el mismo ejemplo con `class`:
+
+```js
+class Range {
+  //añado funcion constructora
+  constructor(from, to) {
+    this.from = from;
+    this.to = to;
+  }
+  //añado mis metodos/funciones
+  includes(x) {
+    return this.from <= x && x <= this.to;
+  }
+
+  toString() {
+    return `${this.from}...${this.to}`;
+  }
+}
+```
+
+- Funcion factoria: es aquella que al invocarla nos crea un objeto:
+
+  ```js
+  const createShoppingCart = () => {
+    items: {
+    }
+  };
+  ```
+
+- Encapsulamiento de propiedades o metodos: una de las cosas que podemos hacer para indicar a otros programadores que ciertas propiedades o metodos son "privados" y no deben utilizarse a la ligera, es añadiento el caracter `_` delante de la propiedad.
+
+- **Funcion Constructora**: Solo inicializa un objeto.
 
   - Suele empezar en letra Mayuscula por convencion.
 
-```js
-function Car(make, model, year) {
-  this.make = make;
-  this.model = model;
-  this.year = year;
-}
+    ```js
+    function Car(make, model, year) {
+      this.make = make;
+      this.model = model;
+      this.year = year;
+    }
 
-let mycar = new Car("Eagle", "Talon TSi", 1993);
-```
+    let mycar = new Car("Eagle", "Talon TSi", 1993);
+    ```
 
-- ¿Que es instanciar(crear una instancia)?(INVESTIGAR)
+- ¿Que es instanciar(crear una instancia)?: es crear un objeto a raiz de una clase. por ejemplo esto, instancia e inicializa. Se hace con `new`:
+
+  ```js
+  class ShoppingCart {}
+
+  const shopingCart = new ShoppingCart();
+  ```
+
+- Propiedad Estatica de una clase: Hace que se puedan llamar a cosas sin que esten instanciadas, no necesitamos el `new`:
+
+  ```js
+  class Dog {
+    static Breeds = {
+      YORK_SHIRE = "YORK_SHIRE";
+      ROTWEILLER = "ROTWEILLER";
+    };
+
+    constructor(name, weight, breed){
+      this.name = name;
+      this.weight = weight;
+      this.breed = breed;
+    };
+
+    bark() {
+      console.log("Woof, Woof!")
+    };
+  };
+  ```
+
+  Siguiendo el ejemplo de antes vamos a utilizar la propiedad `static` y ademas vamos a usar el metodo `extends`, que sirve para hacer que una clase, adopte todas las propiedades de otra clase, ademas de algunas nuevas que se quieran añadir.
+
+  Para ello necesitaremos invocar su funcion constructora con el metodo `super()`y dentro todas los argumentos que tenia la clase "padre".
+
+  **NORMA: no mas de 2 niveles de herencia**
+
+  ```js
+  class Dog {
+    static Breeds = {
+      YORK_SHIRE: "YORK_SHIRE",
+      ROTWEILLER: "ROTWEILLER",
+    };
+
+    constructor(name, weight, breed) {
+      this.name = name;
+      this.weight = weight;
+      this.breed = breed;
+    }
+
+    bark() {
+      console.log("Woof, Woof!");
+    }
+  }
+
+  class Yorkshire extends Dog {
+    constructor(name, weight) {
+      super(name, weight, Dog.Breeds.YORK_SHIRE);
+    }
+    //cogeria tambien las funciones del padre, pero si las volvemos a escribir las sobreescribe
+    bark() {
+      console.log("Wiif, Wiif!");
+    }
+  }
+
+  const lenin = new Yorkshire("Lenin", 3.5);
+  ```
 
 ## **Herencia**
 
@@ -699,7 +1182,7 @@ let mycar = new Car("Eagle", "Talon TSi", 1993);
 
 ## **FUNCIONES**
 
-- Una funcion se escribe con la palabra `function` seguida de una lista separada por comas (`,`) de 0 o mas identificadores/parametros/argumentos entre parentesis.Ademas dentro de llaves `{}` el cuerpo d ela funcion.
+Una funcion se escribe con la palabra `function` seguida de una lista separada por comas (`,`) de 0 o mas identificadores/parametros/argumentos entre parentesis.Ademas dentro de llaves `{}` el cuerpo d ela funcion.
 
 ```js
 const square = function (x) {
@@ -718,23 +1201,23 @@ sum10(5);
 
 - Un ejemplo de funcion:
 
-```js
-const sum = function (x, y) {
-  return x + y;
-};
+  ```js
+  const sum = function (x, y) {
+    return x + y;
+  };
 
-//con fat arrows
+  //con fat arrows
 
-const sum = (x, y) => x + y;
+  const sum = (x, y) => x + y;
 
-//acaba
+  //acaba
 
-const suma5 = function (x) {
-  return sum(5, x);
-};
+  const suma5 = function (x) {
+    return sum(5, x);
+  };
 
-suma5(7); //--> 12
-```
+  suma5(7); //--> 12
+  ```
 
 - Tres maneras de escribir la misma funcion:
 
@@ -754,6 +1237,103 @@ suma5(7); //--> 12
 - Las variables creadas dentro de una funcion tendran un _scope_ Local en vez de Global.
 
   Si declaramos un avariable con un mismo nombre que una fuera de la funcion, dentro d ela funcion, tomara el valor de dentro de la funcion.
+
+- Hay dos maneras de hacer que una funcion te devuelva un objeto:
+
+  ```js
+  //Forma 1
+  const Library = () => {
+    return {
+      books: 4,
+    };
+  };
+
+  //Forma 2 (Esta manera es mas rapida)
+  const Library = () => ({
+    books: 4,
+  });
+  ```
+
+- Se puede asignar valores por defecto a los argumentos en las funciones, para en el caso de que no se introduzca, de vevuelva ese valor:
+
+  ```js
+  const increment = (number, value = 1) => number + value;
+
+  increment(5); //return 6
+  ```
+
+- Los **Rest Parameters**: Es una manera de hacer que los argumentos de una funcion no sean siempre definibles, es decir, en una funcion puedes meter varios argumentos y ademas usar el spread operator para indicar el contenido de un Array.
+
+  ```js
+  function myFun(a, b, ...manyMoreArgs) {
+    console.log("a", a);
+    console.log("b", b);
+    console.log("manyMoreArgs", manyMoreArgs);
+  }
+
+  myFun("one", "two", "three", "four", "five", "six");
+
+  // Console Output:
+  // a, one
+  // b, two
+  // manyMoreArgs, [three, four, five, six]
+  ```
+
+- ` export` & `import`:
+
+  - `export`: Podemos rexportar funciones ubicadas en otros ficheros de \*.js utilizando la expresion `export`:
+
+    ```js
+    //forma 1
+    export const add = (x, y) => {
+      return x + y;
+    };
+
+    //forma 2
+    const add = (x, y) => {
+      return x + y;
+    };
+
+    export { add };
+    ```
+
+  - `import`: Por otro lado, para poder hacer uso de esas funciones exportadas, debemos invocarlas con `import` en el fichero que quieran ser utilizadas:
+
+    ```js
+    import { add, subtract } from "./math_functions.js";
+    ```
+
+  - `*`: En caso de querer importar todo lo contenido en un ficher, podemos utilizar el simbolo asterisco en los import, de la siguiente manera:
+
+    ```js
+    import * as misOperMatem from "./math_functions.js";
+    ```
+
+    Esto lo que hace es crear un `objeto` en el que va a incluir todos los export del archivo referencia. De tal manera que podremos hacer uso de esas funciones/variables en cualquier momento invocandoilo a traves de ese objeto:
+
+    ```js
+    misOperMatem.add(2, 4); //6
+    misOperMatem.substract(10, 4); //6
+    ```
+
+  - `export default`: este tipo de export se usa cuando en un fichero solo vamos a querer exportar una unica cosa (funcion/constante etc).
+
+    Se puede declarar con cualquier nombre (o sin nombre) en ese fichero, pero nos permite darle cualquier otro en el fichero donde lo `importaremos`
+
+    ```js
+    // named function
+    export default function add(x, y) {
+      return x + y;
+    }
+
+    // anonymous function
+    export default function (x, y) {
+      return x + y;
+    }
+
+    //y asi se importa
+    import add from "./math_functions.js"; //se puede nombrar como queramos
+    ```
 
 ## **Expresiones**
 
@@ -1394,3 +1974,13 @@ false - 5 - 5;
 1 * "2";
 2;
 ```
+
+### FIFO (First In, First Out)
+
+Es lo que viene a llamarse una cola (Queue en ingles). Se trata de poner meter y sacar elementos en un array como en la cola de espera de un banco o al comprar unas entradas.
+
+Se hace con `Array.unshift` para pushear en el primer lugar y con `Array.pop` para eliminar el ultimo lugar.
+
+Tambien funcionara con `shift` y con `push`
+
+[Enlace mas info](<https://medium.com/laboratoria-developers/queues-in-javascript-2602677c9c3b#:~:text=Una%20cola%20(queue%20en%20ingl%C3%A9s)%20es%20una%20estructura%20de%20datos,retiramos%20data%20por%20el%20frente.&text=Es%20lo%20que%20llamamos%20una,First%20In%2C%20First%20Out>)
