@@ -1,4 +1,4 @@
-# Array
+# **Array**
 
 [Enlace --> ARRAY](https://developer.mozilla.org/es/docs/Web/JavaScript/Referencia/Objetos_globales/Array#)
 

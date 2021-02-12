@@ -412,23 +412,48 @@ NOTA: cualquier valor en JavaScript puede ser convertido en valor Booleano.
   //(6) [1, 1, 6, 3, 4, 4]
   ```
 
-- `.flat()`: (INVESTIGAR)
+- `array.flat(depth)`: devuelve un array con todos los valores incluidos en otro array, reduciendolo a una sola lista, sin arrays internos ni nada. Se puede indicar la profuncidad a la que queramos llegar, aunque es opcional. Por defecto es 1.
+
+Tambien elimina los elementos vacios "".
+
+Ejemplos:
+
+```js
+let arr1 = [1, 2, [3, 4]];
+arr1.flat();
+// [1, 2, 3, 4]
+
+let arr2 = [1, 2, [3, 4, [5, 6]]];
+arr2.flat();
+// [1, 2, 3, 4, [5, 6]]
+
+let arr3 = [1, 2, [3, 4, [5, 6]]];
+arr3.flat(2);
+// [1, 2, 3, 4, 5, 6]
+
+let arr4 = [1, 2, , 4, 5];
+arr4.flat();
+// [1, 2, 4, 5]
+```
+
 - `.sort()` (INVESTIGAR)
-- `.slice(start, end)`: devuelve un array indicando desde donde hasta donde lo quieres. El primer argumento indicas el index desde donde vas a cogerlo, el segundo hasta donde quieres cogerlo(sin incluirlo.
+- `.slice(start, end)`: devuelve un array indicando desde donde hasta donde lo quieres. El primer argumento indicas el index desde donde vas a cogerlo, el segundo hasta donde quieres cogerlo(sin incluirlo).
 
-  ```js
-  let nombres = ["Rita", "Pedro", "Miguel", "Ana", "Vanesa"];
-  let masculinos = nombres.slice(1, 3);
+No modifica el array principal.
 
-  // masculinos contiene ['Pedro','Miguel']
-  ```
+```js
+let nombres = ["Rita", "Pedro", "Miguel", "Ana", "Vanesa"];
+let masculinos = nombres.slice(1, 3);
 
-  Si los argumentos son negativos, empezara a contar desde el final del array.
+// masculinos contiene ['Pedro','Miguel']
+```
 
-  ```js
-  console.log((hola = nombres.slice(-3, -1)));
-  //(2) ["Miguel", "Ana"]
-  ```
+Si los argumentos son negativos, empezara a contar desde el final del array.
+
+```js
+console.log((hola = nombres.slice(-3, -1)));
+//(2) ["Miguel", "Ana"]
+```
 
 - `arr.splice()`: cambia el contenido de un array eliminando elementos existentes o agregando nuevos elementos.
 
@@ -436,7 +461,7 @@ NOTA: cualquier valor en JavaScript puede ser convertido en valor Booleano.
 
   Argumentos:
 
-  - `start`: el indice desde donde va a comenzar
+  - `start`: el indice desde donde va a comenzar (incluido)
   - `deleteCount`: cuantos elementos se vana eliminar contando el start. Si es 0 no se eliminara, sino que insertará el siguiente argumento.
   - `item`: es el elemento a insertar o por el que se va a sustituir.
 
@@ -471,10 +496,14 @@ Es como si hicieramos esto:
 const arr = [1, 2, 3, 4, 5];
 
 const aplica = (nuestrafuncion) => {
-  for (let element of array) {
+  for (let element of arr) {
     nuestraFuncion(element);
   }
 };
+
+const logea = (x) => console.log(x);
+
+aplica(logea);
 ```
 
 - `arr.foEeach()`: recorre todo el array y aplica la funcion que tu le digas a cada elemento del array (como un for). Recorre y no devuelve nada:
@@ -485,7 +514,7 @@ const arr = [1, 2, 3, 4, 5];
 arr.forEach((e) => e * 2);
 ```
 
-- `arr.map()`: Recorre y te devuelve un array con los cambios hechos segun la funcion:
+- `arr.map()`: Recorre y te devuelve un array con los cambios hechos segun la funcion:. Te devuelve un nuevo array pero cambiara cada elemento con cada cosa que devuelva tu funcion.
 
 ```js
 const arr = [1, 2, 3, 4, 5];

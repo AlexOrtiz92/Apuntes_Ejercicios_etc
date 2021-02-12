@@ -96,7 +96,7 @@ mapN(3, (_, index) => index);
 //(3) [0, 1, 2]
 ```
 
-- Formato d efecha muy utilizado:
+- Formato de fecha muy utilizado:
 
 ```js
 new Date().toISOString();

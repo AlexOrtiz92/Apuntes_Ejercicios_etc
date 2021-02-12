@@ -26,6 +26,9 @@ Ver mas [INFO](https://www.hostinger.es/tutoriales/que-es-npm/#Iniciando-un-proy
    Creara un archivo llamado "package-lock.json" y las dependencias.
 
 5. Ahora instalaremos bootstrap a traves de aqui, ademas de Jquery. Tambien `$ npm i -S bootstrap jquery popper.js`
+
+   Solo se usa si no tenemos un server o preparacion.
+
 6. Nunca se eliminara una dependencia eliminando la linea en el archivo .json sino con `$ npm uninstall popper.js`
 7. para volver a instalarlo `$ npm i -S popper.js`
 8. Lo mas importante del package.json son los "scripts" y las "dependencies"

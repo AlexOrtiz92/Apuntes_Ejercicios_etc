@@ -57,8 +57,10 @@ Creacion de repositorios tanto en local como en remoto.
 - Hacer **MERGE** (INTO)
 
   1. Hacemos `$ git checkout master` a la rama que que vas a mergear otra
-  2. `$ git merge develop`para mergear la rama develop en master.
+  2. `$ git merge develop` para mergear la rama develop en master.
      via--> [git-scm.com](https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging)
+
+     (Es decir, master va a pasar a tener todo lo que contiene develop)
 
 - `$ git branch -d develop`: eliminar una rama, en este ejemplo se elimino develop.
 
@@ -87,6 +89,30 @@ Creacion de repositorios tanto en local como en remoto.
 7. enlazamos el repositorio local con el repositorio en remoto creado en GitHub o BitBucket
 
 ---
+
+## Fork
+
+Hacer un fork significa realizar una copia de un repositorio externo en tu propio respositorio. Es decir, realizar una copia en la nube.
+
+Se hace pulsando al boton `fork` en GitHub.
+
+## T**rabajando con fetch**
+
+Si trabajamos con un repo forqueado, por ejemplo de ejercicios del profesor, primeros nos haremos ese fork.
+
+Segun bayamos trabajando, lo iremos subiendo a nuestro repo en la nube, pero, como hacemos si el repo "padre" se actualiza y añade una nueva carpeta?
+
+- realizamos un `$ git fetch "url repo padre"`
+
+- una vez actualizado en nuestro local con ese fetch, lo que haremos sera hacer merge con la rama que queramos y commitear ese cambio para que ya nos aparezca que se ha realizado. En mi caso:
+
+  1. cambio a la rama que quiero que merge: `$ git checkout developer`
+
+  2. hago el merge: `$ git merge danielsotogarcia/master`
+
+  3. Nos pedira que hagamos un commit -m para dejar constancia.
+
+  4. una vez estos pasos, ya constara como parte de nuestro espacio de trabajo todo lo nuevo, en caso de no tener errores que solventar.
 
 ## Trabajando con GIT
 
