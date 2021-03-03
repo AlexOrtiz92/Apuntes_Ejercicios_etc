@@ -381,6 +381,95 @@ APUNTES de ejercicio--> /Users/alesortiz/Desktop/NEOLAND/FULL-STACK_NEOLAND/3.Cl
 
   sacamos la informacion del elemento a actualizar mediante `params` y los datos a añadir o actualizar, a traves de `body`.
 
+- Manera de resolver los errores: y redirigir a otra pagina.
+
+  Se hace en el lado del servidor:
+
+  ```js
+  //Gestionar el error y redireccion
+  app.use((request, response, next) => {
+    response.status(404);
+
+    // response con un pagina html
+    if (request.accepts("html")) {
+      res.redirect("/galeria");
+      return;
+    }
+
+    // response con un json
+    if (request.accepts("json")) {
+      res.send({ error: "Not found" });
+      return;
+    }
+
+    // reponse de manera predefinida si nada de lo contrario hace match
+    response.type("txt").send("Not found");
+  });
+  ```
+
+- Hacer POST de imagenes a traves de formularios:
+
+  - En el server.js a traves de formidable:
+
+    ```js
+    //esto es un midleware, que es un webservice, indicamos la ruta(endpoint)
+    app.post("/uploadFile", (request, response) => {
+      const form = new formidable.IncomingForm(); //de esta forma inicializamos formidable
+
+      // form.maxFileSize = 200
+
+      form.parse(request); //parseamos y le pasamos la request para que formidable la entiendoa
+
+      //evento que se lanza cuando comienza la subida
+      form.on("fileBegin", (name, file) => {
+        file.path = __dirname + "/public/images/" + file.name; //aqui podemos dar nombre de la ruta como queramos o realizar mas acciones, configuraciones etc.
+      });
+
+      //evento que se ejecuta cuando temrina la subida
+      form.on("file", (name, file) => {
+        console.log("Uploaded " + file.name);
+      });
+
+      form.on("end", () => {
+        response.redirect("/galeria");
+      });
+    });
+    ```
+
+  - 2 Formas de enviar el archivo
+
+    1. En una funcion en un \*.js a traves de `new FormData()`, usando en html `input type=file`y `input type=button`:
+
+       ```js
+       const upload = () => {
+         const formData = new FormData();
+         const fileinput = document.getElementById("fileinput");
+
+         formData.append("name", "abc123");
+         formData.append("file", fileinput.files[0]);
+
+         const options = {
+           method: "POST",
+           body: formData,
+         };
+
+         fetch("/uploadFile", options)
+           .then((response) => {
+             return response.json();
+           })
+           .then((data) => {
+             console.log(data);
+             alert("fichero subido");
+             window.location.href = data.hola;
+           })
+           .catch((err) => {
+             console.error(err);
+           });
+       };
+       ```
+
+    2. A traves de una etiqueta form `input type=file`y `input type=submit` mediante html:
+
 Buenas practicas a la hora de crear `endpoints`
 
 ![buenas practicas API](../imagenes_md/API_buenaspracticas1.png)
